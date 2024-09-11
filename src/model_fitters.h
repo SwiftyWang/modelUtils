@@ -17,7 +17,7 @@
 #define MODEL_ERROR_UNKNOWN             10
 
 /** global constants specifying the debug level. **/
-int R_MODEL_DEBUG_LEVEL;
+int R_MODEL_DEBUG_LEVEL_2;
 
 #define R_MODEL_DEBUG_TRACE   1
 #define R_MODEL_DEBUG_LOW     2 
