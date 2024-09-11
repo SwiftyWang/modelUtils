@@ -374,7 +374,7 @@ void __do_multinomial(double* X, int N, int P, int M, double* Y,
     F77_CALL(dgesv)(&MP, &MP, XTWX, &MP, pivot, I, &MP, &info); 
 
     if (info != 0) {
-      if (R_MODEL_DEBUG_LEVEL <= R_MODEL_DEBUG_WARN)
+      if (R_MODEL_DEBUG_LEVEL_2 <= R_MODEL_DEBUG_WARN)
 	Rprintf("Error: Unable to invert matrix in \n");
       
       *likelihood = R_PosInf;
@@ -469,7 +469,7 @@ void __do_linear (double* X, int n, int p, double* Y,
 		  int* pivot, double* qraux, double* work, double* rss,
 		  int* fail)
 {
-  if (R_MODEL_DEBUG_LEVEL <= R_MODEL_DEBUG_LOW)
+  if (R_MODEL_DEBUG_LEVEL_2 <= R_MODEL_DEBUG_LOW)
     Rprintf("entering: __do_linear with: n: %d, p: %d\n", n, p);
 
   int k = 0, j = 0, i = 0, one = 1;
@@ -518,7 +518,7 @@ void __do_linear (double* X, int n, int p, double* Y,
 		  effects, rank, pivot, qraux, work);
 
   if (*rank < p) { 
-    if (R_MODEL_DEBUG_LEVEL <= R_MODEL_DEBUG_WARN)
+    if (R_MODEL_DEBUG_LEVEL_2 <= R_MODEL_DEBUG_WARN)
       Rprintf("Rank deficiency; setting RSS to infinity.");
     
     *rss = R_PosInf;
@@ -548,7 +548,7 @@ void __do_linear (double* X, int n, int p, double* Y,
 /*     Y[j] = (sroot != 0) ? (Y[j] / sroot) : 0; */
 /*   } */
   
-  if (R_MODEL_DEBUG_LEVEL <= R_MODEL_DEBUG_LOW)
+  if (R_MODEL_DEBUG_LEVEL_2 <= R_MODEL_DEBUG_LOW)
     Rprintf("Calculated rss of: %f\n", RSS);
 
   *pivot=NnonNA;
@@ -561,7 +561,7 @@ void __do_logistic(double* X, int n, int p, double* Y,
 		   double* weights, int max_iter, double* new_coefficients, 
 		   double* WX, double* y_shifted, int* error)
 {
-  if (R_MODEL_DEBUG_LEVEL <= R_MODEL_DEBUG_LOW)
+  if (R_MODEL_DEBUG_LEVEL_2 <= R_MODEL_DEBUG_LOW)
     Rprintf("Entering __do_logistic with: n: %d, p: %d\n", n, p);
   
   int iter = 0, k = 0, j = 0, i = 0; 
@@ -574,7 +574,7 @@ void __do_logistic(double* X, int n, int p, double* Y,
   *error = MODEL_NO_ERROR;
   
   if (tol == 0) { 
-    if (R_MODEL_DEBUG_LEVEL <= R_MODEL_DEBUG_WARN)
+    if (R_MODEL_DEBUG_LEVEL_2 <= R_MODEL_DEBUG_WARN)
       Rprintf("tolerance is precisely 0 resetting to something sensible.\n");
     tol = 1e-8;
   }
@@ -583,7 +583,7 @@ void __do_logistic(double* X, int n, int p, double* Y,
   memset(coefficients, 0.0, sizeof(double)*p); 
 
   while (1) {
-    if (R_MODEL_DEBUG_LEVEL <= R_MODEL_DEBUG_LOW)
+    if (R_MODEL_DEBUG_LEVEL_2 <= R_MODEL_DEBUG_LOW)
       Rprintf("Iteration: %d\n", iter);
     
     if (iter++ >= max_iter) {
@@ -609,7 +609,7 @@ void __do_logistic(double* X, int n, int p, double* Y,
 
       theta_j = 0;
       for (i = 0; i < p; i++) {
-	if (R_MODEL_DEBUG_LEVEL <= R_MODEL_DEBUG_TRACE)
+	if (R_MODEL_DEBUG_LEVEL_2 <= R_MODEL_DEBUG_TRACE)
 	  Rprintf("%f * %f\n", X[j + i*n], coefficients[i]);
 	
  	theta_j += X[j + i*n] * coefficients[i];
@@ -633,7 +633,7 @@ void __do_logistic(double* X, int n, int p, double* Y,
 	WX[j + i*n] = X[j + i*n] * sqrt_var_pi_j * sqrt_weight_j; 
       }
       
-      if (R_MODEL_DEBUG_LEVEL <= R_MODEL_DEBUG_TRACE) {
+      if (R_MODEL_DEBUG_LEVEL_2 <= R_MODEL_DEBUG_TRACE) {
 	Rprintf("theta_j: %f\n", theta_j);
 	Rprintf("pi_j: %f\n", pi_j);
 	Rprintf("weight[%d] = %f\n", j, weights[j]);
@@ -666,7 +666,7 @@ void __do_logistic(double* X, int n, int p, double* Y,
       pivot[j] = j + 1; 
     }
     
-    if (R_MODEL_DEBUG_LEVEL <= R_MODEL_DEBUG_LOW)
+    if (R_MODEL_DEBUG_LEVEL_2 <= R_MODEL_DEBUG_LOW)
       Rprintf("deviance: %g\n", DEV);
 
     if (fabs(DEV_OLD - DEV)/(0.1 + fabs(DEV)) < tol)
