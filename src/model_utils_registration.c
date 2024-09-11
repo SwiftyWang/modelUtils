@@ -27,7 +27,7 @@ void R_init_modelUtils(DllInfo *info)
   R_RegisterCCallable("modelUtils", "fit_model_with_allocation", (DL_FUNC) &fit_model_with_allocation);
 
   /** set the default value of the debug level. **/
-  R_MODEL_DEBUG_LEVEL = 10;
+  R_MODEL_DEBUG_LEVEL_2 = 10;
 }
           
 void
